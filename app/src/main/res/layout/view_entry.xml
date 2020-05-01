@@ -10,16 +10,29 @@
 											 tools:layout_editor_absoluteX="0dp"
 											 tools:layout_editor_absoluteY="81dp">
 
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guideline_start"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		app:layout_constraintGuide_begin="8dp"/>
+
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/guideline_end"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		app:layout_constraintGuide_end="8dp" />
+
     <ImageView
         android:id="@+id/main_icon"
         android:layout_width="@dimen/entry_img_width"
         android:layout_height="@dimen/entry_img_height"
-        android:layout_marginBottom="6dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -33,51 +46,60 @@
 		android:ellipsize="end"
 		android:gravity="top"
 		android:maxLines="3"
-		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:textColor="?attr/colorReadState"
 		android:textIsSelectable="false"
-		app:layout_constraintBottom_toTopOf="@+id/feed_name_layout"
+		app:layout_constraintTop_toTopOf="@id/main_icon"
+		app:layout_constraintStart_toEndOf="@+id/main_icon"
 		app:layout_constraintEnd_toStartOf="@+id/favorite_icon"
 		app:layout_constraintHorizontal_bias="0.5"
-		app:layout_constraintStart_toEndOf="@+id/main_icon"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintVertical_chainStyle="packed"
-		tools:text="long title" />
+		tools:text="This is a really long title that will span three lines so we can get a good estimation of what that looks like" />
+
+	<TextView
+		android:id="@+id/date"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:alpha="0.3"
+		android:maxLines="1"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="?attr/colorReadState"
+		android:textIsSelectable="false"
+		app:layout_constraintEnd_toEndOf="@id/guideline_end"
+		app:layout_constraintBottom_toBottomOf="@id/main_icon"
+		tools:text="24/12/2006 12:45" />
 
 	<TextView
 		android:id="@+id/feed_name_layout"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginEnd="8dp"
-		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
+		android:layout_marginEnd="4dp"
 		android:alpha="0.7"
 		android:drawablePadding="3dp"
 		android:maxLines="1"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:textColor="?attr/colorColoredReadState"
 		android:textIsSelectable="false"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@+id/date"
-		app:layout_constraintStart_toEndOf="@+id/main_icon"
-		app:layout_constraintTop_toBottomOf="@+id/title"
-		tools:text="feed name" />
+		android:ellipsize="end"
+		app:layout_constraintBottom_toBottomOf="@id/main_icon"
+		app:layout_constraintStart_toStartOf="@id/title"
+		app:layout_constraintEnd_toStartOf="@id/date"
+		tools:text="A long feed name can be seen here" />
 
 	<TextView
-		android:id="@+id/date"
-		android:layout_width="wrap_content"
+		android:id="@+id/entry_url"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginEnd="8dp"
+		android:layout_marginBottom="2dp"
+		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:alpha="0.3"
 		android:maxLines="1"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:textColor="?attr/colorReadState"
 		android:textIsSelectable="false"
-		app:layout_constraintBottom_toBottomOf="@+id/feed_name_layout"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toTopOf="@+id/feed_name_layout"
-		tools:text="24/12/2006 12:45" />
-
+		android:textColor="?attr/colorReadState"
+		android:ellipsize="end"
+		app:layout_constraintBottom_toTopOf="@id/feed_name_layout"
+		app:layout_constraintStart_toStartOf="@id/title"
+		app:layout_constraintEnd_toEndOf="@id/guideline_end"
+		tools:text="https://bringatrailer.com/buick"/>
 
 	<ImageView
 		android:id="@+id/favorite_icon"
@@ -87,5 +109,13 @@
 		android:src="@drawable/ic_star_24dp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_marginTop="6dp"
+		android:background="?attr/colorSubtitle"
+		android:alpha="0.2"
+		app:layout_constraintTop_toBottomOf="@id/main_icon"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

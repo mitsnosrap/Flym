@@ -78,6 +78,9 @@ class EntryAdapter(private val globalClickListener: (EntryWithFeed) -> Unit, pri
             date.isEnabled = !entryWithFeed.entry.read
             date.text = entryWithFeed.entry.getReadablePublicationDate(context)
 
+            entry_url.isEnabled = !entryWithFeed.entry.read
+            entry_url.text = entryWithFeed.entry.link
+
             if (entryWithFeed.entry.favorite) {
                 favorite_icon.setImageResource(R.drawable.ic_star_24dp)
             } else {
