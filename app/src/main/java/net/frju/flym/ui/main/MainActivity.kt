@@ -51,6 +51,7 @@ import net.frju.flym.App
 import net.frju.flym.data.entities.Feed
 import net.frju.flym.data.entities.FeedWithCount
 import net.frju.flym.data.utils.PrefConstants
+import net.frju.flym.data.utils.setTeslaUnreadCount
 import net.frju.flym.service.AutoRefreshJobService
 import net.frju.flym.service.FetcherService
 import net.frju.flym.ui.about.AboutActivity
@@ -381,6 +382,7 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
 	override fun onPause() {
 		super.onPause()
 		isInForeground = false
+		setTeslaUnreadCount()
 	}
 
 	override fun onRestoreInstanceState(savedInstanceState: Bundle) {

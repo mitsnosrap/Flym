@@ -42,6 +42,7 @@ import net.frju.flym.data.entities.Feed
 import net.frju.flym.data.entities.Task
 import net.frju.flym.data.entities.toDbFormat
 import net.frju.flym.data.utils.PrefConstants
+import net.frju.flym.data.utils.setTeslaUnreadCount
 import net.frju.flym.ui.main.MainActivity
 import net.frju.flym.utils.HtmlUtils
 import net.frju.flym.utils.getPrefBoolean
@@ -160,6 +161,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 					}
 
 					showRefreshNotification(newCount)
+					setTeslaUnreadCount()
 					mobilizeAllEntries()
 					downloadAllImages()
 
