@@ -18,11 +18,15 @@
 package net.frju.flym.ui.entries
 
 import android.annotation.SuppressLint
+import android.content.res.Resources
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -61,13 +65,30 @@ class EntryAdapter(private val globalClickListener: (EntryWithFeed) -> Unit, pri
         fun bind(entryWithFeed: EntryWithFeed, globalClickListener: (EntryWithFeed) -> Unit, globalLongClickListener: (EntryWithFeed) -> Unit, favoriteClickListener: (EntryWithFeed, ImageView) -> Unit) = with(itemView) {
             val mainImgUrl = if (TextUtils.isEmpty(entryWithFeed.entry.imageLink)) null else FetcherService.getDownloadedOrDistantImageUrl(entryWithFeed.entry.id, entryWithFeed.entry.imageLink!!)
 
-            val letterDrawable = Feed.getLetterDrawable(entryWithFeed.entry.feedId, entryWithFeed.feedTitle)
+            var guideBegin: Int
             if (mainImgUrl != null) {
-                GlideApp.with(context).load(mainImgUrl).centerCrop().transition(withCrossFade(CROSS_FADE_FACTORY)).placeholder(letterDrawable).error(letterDrawable).into(main_icon)
+                main_icon.visibility = VISIBLE
+                GlideApp.with(context)
+                        .load(mainImgUrl)
+                        .centerCrop()
+                        .transition(withCrossFade(CROSS_FADE_FACTORY))
+                        .into(main_icon)
+
+                // Set the guideline for text to start after main_icon
+                guideBegin = resources.getDimension(R.dimen.entry_guideline_text_start_with_icon).toInt()
             } else {
-                GlideApp.with(context).clear(main_icon)
-                main_icon.setImageDrawable(letterDrawable)
+                main_icon.visibility = GONE
+                GlideApp.with(context)
+                        .clear(main_icon)
+
+                // Set the guideline for text to start at the beginning
+                guideBegin = resources.getDimension(R.dimen.entry_guideline_text_start_no_icon).toInt()
             }
+
+            // Adjust constraint guideline for text start to be at beginning
+            val params = guideline_text_start.layoutParams as ConstraintLayout.LayoutParams
+            params.guideBegin = guideBegin
+            guideline_text_start.layoutParams = params
 
             title.isEnabled = !entryWithFeed.entry.read
             title.text = entryWithFeed.entry.title
