@@ -31,6 +31,9 @@ import android.os.Build
 import android.os.Handler
 import android.text.Html
 import androidx.core.app.NotificationCompat
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import net.dankito.readability4j.extended.Readability4JExtended
@@ -82,10 +85,13 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 			setCookiePolicy(CookiePolicy.ACCEPT_ALL)
 		}
 
+		private val CHUCKER_COLLECTOR = ChuckerCollector(context, true, RetentionManager.Period.ONE_DAY)
+
 		private val HTTP_CLIENT: OkHttpClient = OkHttpClient.Builder()
 				.connectTimeout(10, TimeUnit.SECONDS)
 				.readTimeout(10, TimeUnit.SECONDS)
 				.cookieJar(JavaNetCookieJar(COOKIE_MANAGER))
+				.addInterceptor(ChuckerInterceptor(context, CHUCKER_COLLECTOR))
 				.build()
 
 		const val FROM_AUTO_REFRESH = "FROM_AUTO_REFRESH"
@@ -327,6 +333,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 								}
 							}
 						} catch (t: Throwable) {
+							CHUCKER_COLLECTOR.onError("Task", t)
 							error("Can't mobilize feedWithCount ${entry.link}", t)
 						}
 					}
@@ -424,6 +431,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 					feed.update(romeFeed)
 				}
 			} catch (t: Throwable) {
+				CHUCKER_COLLECTOR.onError("Feed (${feed.title})", t)
 				feed.fetchError = true
 			}
 
@@ -540,6 +548,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 						}
 					}
 				} catch (e: Exception) {
+					CHUCKER_COLLECTOR.onError("Image", e)
 					File(tempImgPath).delete()
 					throw e
 				}

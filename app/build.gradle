@@ -122,4 +122,5 @@ dependencies {
 	implementation 'net.dankito.readability4j:readability4j:1.0.4'
 	implementation 'pub.devrel:easypermissions:1.2.0'
 	implementation 'com.rometools:rome-opml:1.12.2'
+	debugApi "com.github.ChuckerTeam.Chucker:library:3.1.2"
 }
