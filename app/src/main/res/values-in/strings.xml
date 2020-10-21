@@ -22,6 +22,7 @@
     <string name="drawer_explanation">Selamat datang!\n\nSentuh lama pada feed untuk menampilkan menu ▼</string>
     <string name="drawer_fetch_error_explanation">Beberapa feed tidak disegarkan dengan benar ▼</string>
     <string name="about_screen_info">Saya mempublikasikan aplikasi ini secara gratis, bebas dan bersumber terbuka dengan lisensi GPLv3. Jangan sungkan untuk memodifikasinya selama anda juga membuatnya bersumber terbuka.</string>
+    <string name="navigation_button_content_description">Buka/tutup menu feed</string>
     <!-- FEEDS -->
     <string name="feeds">Feed</string>
     <string name="menu_add_group">Tambah grup</string>
@@ -41,6 +42,8 @@
     <string name="to_group_above">Ke atas grup</string>
     <string name="to_group_into">Ke dalam grup</string>
     <string name="feed_name">Nama feed</string>
+    <string name="feed_edit_drag_handle_content_description">Handel seret</string>
+    <string name="feed_edit_feed_icon_content_description">Ikon feed</string>
     <!-- ENTRIES -->
     <string name="feed_link">Tautan feed</string>
     <string name="all_entries">Semua entri</string>
@@ -59,6 +62,9 @@
     <string name="undo">Urung</string>
     <string name="marked_as_read">Ditandai sudah dibaca</string>
     <string name="marked_as_unread">Ditandai belum dibaca</string>
+    <string name="expand_arrow_content_description">Buka grup feed</string>
+    <string name="collapse_arrow_content_description">Tutup grup feed</string>
+    <string name="mark_all_as_read_fab_content_description">Tandai semua dibaca</string>
     <!-- DISCOVER -->
     <string name="discover_search_label">Cari Feed</string>
     <string name="discover_search_hint">Cari kata kunci, URL, atau topik. Topik bisa ditandai dengan awalan #.</string>
@@ -66,7 +72,7 @@
         <item>berita</item>
         <item>politik</item>
         <item>dunia</item>
-        <item>engineering</item>
+        <item>pembangunan</item>
         <item>teknologi</item>
         <item>startup</item>
         <item>telekomunikasi</item>
@@ -90,21 +96,22 @@
     <string name="settings_refresh_enable_notifications">Tampilkan notifikasi penyegaran</string>
     <string name="settings_refresh_enable_notifications_description">Menampilkan notifikasi sistem saat penyegaran selesai dilakukan</string>
     <string name="settings_refresh_interval">Interval penyegaran</string>
-    <string name="settings_category_keep_time">Waktu entri akan disimpan</string>
     <string name="settings_keep_time">Waktu entri yang sudah dibaca akan disimpan</string>
     <string name="settings_keep_time_unread">Waktu entri yang belum dibaca akan disimpan</string>
-    <string name="settings_category_content_presentation">Presentasi konten</string>
+    <string name="settings_category_general">Umum</string>
+    <string name="settings_display_thumbnails">Tampilkan thumbnail</string>
+    <string name="settings_display_thumbnails_description">Tampilkan thumbnail di dalam daftar artikel</string>
     <string name="settings_display_images">Tampilkan gambar</string>
     <string name="settings_display_images_description">Menampilkan gambar di dalam entri</string>
     <string name="settings_preload_image_mode">Pramuat gambar</string>
     <string name="settings_font_size">Ukuran teks</string>
     <string name="settings_refresh_wifi_only">Hanya segarkan melalui Wi-Fi</string>
     <string name="settings_refresh_wifi_only_description">Penyegaran otomatis hanya akan dilakukan saat perangkat tersambung ke jaringan Wi-Fi</string>
-    <string name="settings_category_filter">Filter</string>
     <string name="settings_remove_duplicates_description_title">Hapus duplikat</string>
     <string name="settings_remove_duplicates_description">Memeriksa judul entri yang diunduh dan lewati ketika entri dengan judul yang sama sudah tersedia</string>
-    <string name="filter">Hapus entri yang mengandung kata kunci (daftar dipisah koma)</string>
-    <string name="filter_title">Daftar hitam</string>
+    <string name="filter">Hapus item yang mengandung kata kunci</string>
+    <string name="filter_title">Daftar blokir</string>
+    <string name="filter_dialog_message">Pisahkan kata kunci dengan koma</string>
     <string name="settings_theme">Tema</string>
     <string name="open_browser_direct">Buka entri di peramban default anda</string>
     <string name="open_browser_direct_title">Buka di peramban</string>
@@ -112,10 +119,14 @@
     <string name="refresh_on_startup_title">Segarkan saat memulai</string>
     <string name="settings_hide_button_mark_all_as_read">Sembunyikan tombol \'Tandai semua sudah dibaca\'</string>
     <string name="settings_hide_button_mark_all_as_read_description">Jangan tampilkan tombol \'Tandai semua sudah dibaca\' pada daftar feed</string>
+    <string name="settings_hide_navigation_on_scroll">Sembunyikan navigasi ketika menggulir</string>
+    <string name="settings_hide_navigation_on_scroll_description">Jika diaktifkan, bilah navigasi atas/bawah akan disembunyikan saat menggulir ke bawah dan muncul saat menggulir ke atas</string>
     <string name="settings_sort_order">Urutkan entri dari terbaru ke terlama</string>
     <string name="settings_sort_order_title">Pengurutan</string>
     <string name="settings_enable_entry_swipe">Aktifkan geser saat membaca entri</string>
-    <string name="settings_enable_entry_swipe_description">Jika diaktifkan, geser ke kiri atau kanan untuk membuka entri lama atau baru saat sedang membaca entri.</string>
+    <string name="settings_category_article_list">Daftar artikel</string>
+    <string name="settings_category_article_appearance">Tampilan artikel</string>
+    <string name="settings_enable_entry_swipe_description">Jika diaktifkan, geser untuk beralih artikel lama dan baru saat sedang membaca entri</string>
     <string-array name="settings_intervals">
         <item>5 menit</item>
         <item>15 menit</item>

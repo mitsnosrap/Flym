@@ -29,8 +29,8 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
-import android.text.Html
 import androidx.core.app.NotificationCompat
+import androidx.core.text.HtmlCompat
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
 import net.dankito.readability4j.extended.Readability4JExtended
@@ -43,23 +43,14 @@ import net.frju.flym.data.entities.Task
 import net.frju.flym.data.entities.toDbFormat
 import net.frju.flym.data.utils.PrefConstants
 import net.frju.flym.ui.main.MainActivity
-import net.frju.flym.utils.HtmlUtils
-import net.frju.flym.utils.getPrefBoolean
-import net.frju.flym.utils.getPrefString
-import net.frju.flym.utils.isOnline
-import net.frju.flym.utils.putPrefBoolean
-import net.frju.flym.utils.sha1
+import net.frju.flym.utils.*
 import okhttp3.Call
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.buffer
 import okio.sink
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.connectivityManager
-import org.jetbrains.anko.error
-import org.jetbrains.anko.notificationManager
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileOutputStream
@@ -83,7 +74,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 
         private val HTTP_CLIENT: OkHttpClient = OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
                 .cookieJar(JavaNetCookieJar(COOKIE_MANAGER))
                 .build()
 
@@ -300,8 +291,8 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                                     Readability4JExtended(link, Jsoup.parse(input, null, link)).parse().articleContent?.html()?.let {
                                         val mobilizedHtml = HtmlUtils.improveHtmlContent(it, getBaseUrl(link))
 
-                                        @Suppress("DEPRECATION")
-                                        if (entry.description == null || Html.fromHtml(mobilizedHtml).length > Html.fromHtml(entry.description).length) { // If the retrieved text is smaller than the original one, then we certainly failed...
+                                        val entryDescription = entry.description
+                                        if (entryDescription == null || HtmlCompat.fromHtml(mobilizedHtml, HtmlCompat.FROM_HTML_MODE_LEGACY).length > HtmlCompat.fromHtml(entryDescription, HtmlCompat.FROM_HTML_MODE_LEGACY).length) { // If the retrieved text is smaller than the original one, then we certainly failed...
                                             if (downloadPictures) {
                                                 val imagesList = HtmlUtils.getImageURLs(mobilizedHtml)
                                                 if (imagesList.isNotEmpty()) {
@@ -522,8 +513,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                 IMAGE_FOLDER_FILE.mkdir() // create images dir
 
                 // Compute the real URL (without "&eacute;", ...)
-                @Suppress("DEPRECATION")
-                val realUrl = Html.fromHtml(imgUrl).toString()
+                val realUrl = HtmlCompat.fromHtml(imgUrl, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
 
                 try {
                     createCall(realUrl).execute().use { response ->

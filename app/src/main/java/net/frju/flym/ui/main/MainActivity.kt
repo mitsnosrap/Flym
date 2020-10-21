@@ -30,8 +30,9 @@ import android.os.Environment
 import android.provider.OpenableColumns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.view.GravityCompat
-import androidx.core.view.isGone
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.*
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -295,6 +296,36 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
         handleImplicitIntent(intent)
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        if (getPrefBoolean(PrefConstants.HIDE_NAVIGATION_ON_SCROLL, false)) {
+            ViewCompat.setOnApplyWindowInsetsListener(nav) { _, insets ->
+                val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                nav.updatePadding(bottom = systemInsets.bottom)
+                drawer.updatePadding(left = systemInsets.left, right = systemInsets.right)
+                guideline.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    guideBegin = systemInsets.top
+                }
+                drawer_content.updatePadding(left = systemInsets.left)
+                drawer_content.updateLayoutParams<DrawerLayout.LayoutParams> {
+                    width = resources.getDimensionPixelSize(R.dimen.nav_drawer_width) + systemInsets.left
+                }
+                insets
+            }
+        } else {
+            ViewCompat.setOnApplyWindowInsetsListener(nav, null)
+            nav.updatePadding(bottom = 0)
+            drawer.updatePadding(left = 0, right = 0)
+            guideline.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                guideBegin = 0
+            }
+            drawer_content.updatePadding(left = 0)
+            drawer_content.updateLayoutParams<DrawerLayout.LayoutParams> {
+                width = resources.getDimensionPixelSize(R.dimen.nav_drawer_width)
+            }
+        }
+    }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
